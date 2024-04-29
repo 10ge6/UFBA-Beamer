@@ -1,0 +1,44 @@
+%% beamerouterthemeufba.sty
+%% Copyright 2024 10ge6
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2003/12/01 or later.
+%
+% This work has the LPPL maintenance status "maintained".
+%
+% This Current Maintainer of this work is 10ge6.
+%
+% This work consists of all the *.tex and *.sty files in
+%   https://github.com/10ge6/UFBA-Beamer
+\useoutertheme[right]{sidebar}
+
+% footline
+\setbeamertemplate{footline}{
+    \begin{beamercolorbox}[ht=2.5ex, dp=1.125ex, leftskip=.3cm, rightskip=.3cm]{subtitle in head/foot}
+        % subject - year.semester
+        \insertshortsubtitle\;-\;\the\year.\directlua{
+            local m = \the\month
+            local s = math.ceil(m/6)
+            tex.print(s)
+        }
+        \hfill
+        % (current section's current page/current section's total page count) current page/page count
+        \directlua{
+            local curr_section_page = \insertpagenumber - (\insertsectionstartpage - 1)
+            local total_section_pages = \insertsectionendpage - (\insertsectionstartpage - 1)
+            tex.sprint("(",curr_section_page,"/",total_section_pages,")")
+        } \, \insertframenumber/\inserttotalframenumber
+    \end{beamercolorbox}
+}
+
+% background
+\usepackage{tikz}
+\usebackgroundtemplate{%
+\tikz[overlay,remember picture] \node[opacity=.1, xshift=-0.8cm, yshift=-0.6cm, at=(current page.center)] {
+   \includegraphics[height=.55\paperheight]{figure/logo.png}};
+}
